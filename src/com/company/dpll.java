@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class dpll {
@@ -76,8 +77,14 @@ public class dpll {
             }
         }
         if (t == null) return null;
-        Set<subSet> _disSub = new HashSet<>(disSub);
-        HashMap<var, Integer> _M = new HashMap<>(M);
+        Set<subSet> _disSub = new HashSet<>();
+        for (subSet e : disSub) {
+            _disSub.add(new subSet(e));
+        }
+        HashMap<var, Integer> _M = new HashMap<>();
+        for (Map.Entry<var, Integer> entry : M.entrySet()) {
+            _M.put(entry.getKey(), entry.getValue());
+        }
         _disSub.add(new subSet(t));
         _M.put(t, 1);
         _M = solve(_disSub, _M);
@@ -85,9 +92,15 @@ public class dpll {
             return _M;
         }
         else {
-            _M = new HashMap<>(M);
+            _M = new HashMap<>();
+            for (Map.Entry<var, Integer> entry : M.entrySet()) {
+                _M.put(entry.getKey(), entry.getValue());
+            }
             _M.put(t, 0);
-            _disSub = new HashSet<>(disSub);
+            _disSub = new HashSet<>();
+            for (subSet e : disSub) {
+                _disSub.add(new subSet(e));
+            }
             _disSub.add(new subSet(var.neg(t)));
             return solve(_disSub, _M);
         }

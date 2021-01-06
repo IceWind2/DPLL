@@ -22,6 +22,14 @@ public class Main {
                     tmp.add(new var(i, V, j));
                 }
                 disSub.add(new subSet(tmp));
+                for (int c1 = 1; c1 <= k; c1++) {
+                    for (int c2 = c1 + 1; c2 <= k; c2++) {
+                        tmp.clear();
+                        tmp.add(var.neg(new var(i, V, c1)));
+                        tmp.add(var.neg(new var(i, V, c2)));
+                        disSub.add(new subSet(tmp));
+                    }
+                }
             }
             for (int i = 1; i < V; i++) {
                 for (int j = i + 1; j < V; j++) {
@@ -49,12 +57,22 @@ public class Main {
             }
         }
         System.out.println(V);
+        int[] arr = new int[V+1];
+        for (int i = 1; i <= V; i++) {
+            arr[i] = 0;
+        }
         if (res != null) {
             for (Map.Entry<var, Integer> entry : res.entrySet()) {
                 if ((entry.getValue() == 1 && entry.getKey().neg == 0) || (entry.getValue() == 0 && entry.getKey().neg == 1)) {
                     System.out.println(entry.getKey().i + "-" + entry.getKey().j + " " + entry.getKey().c);
+                    arr[entry.getKey().i]++;
+                    arr[entry.getKey().j]++;
                 }
             }
+        }
+
+        for (int i = 1; i <= V; i++) {
+            System.out.println(arr[i]);
         }
     }
 }
